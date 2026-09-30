@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi IA</title>
+</head>
+
+<body>
+
+    <h1>Mi IA</h1>
+
+    <p>Escribe una pregunta:</p>
+
+    <input type="text" id="pregunta">
+
+    <button onclick="preguntar()">Preguntar</button>
+
+    <p id="respuesta"></p>
+
+    <script>
+        async function preguntar() {
+
+            const pregunta = document.getElementById("pregunta").value;
+
+            const respuesta = await fetch("/preguntar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    pregunta: pregunta
+                })
+            });
+
+            const datos = await respuesta.json();
+
+            document.getElementById("respuesta").textContent = datos.respuesta;
+        }
+    </script>
+
+</body>
+</html>
